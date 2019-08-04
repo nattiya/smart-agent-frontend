@@ -1,0 +1,167 @@
+<!-- <app-header></app-header> -->
+
+<div class="row">
+
+<!-- 
+    <div class="col-md-7">
+
+    </div>  -->
+        <div class="col-md-12">
+
+                <div class="box box-success direct-chat direct-chat-success">
+
+                <div class="box-header with-border">
+                        <h3 class="box-title"><img class="" src="../../../assets/img/header.png"
+                            alt="Message User Image"></h3>
+                    
+                        <div class="box-tools pull-right">
+                            <span style="line-height:34px; font-size: 15px; color: #fff"> <b> KM x Smart Agent Portal </b> </span>
+                
+                        </div>
+                </div>
+                        <!-- /.box-header -->
+    
+                    <div class="box-body">
+                        <!-- Conversations are loaded here -->
+                        <div class="direct-chat-messages" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+    
+    
+                            <ng-container *ngFor="let chat of chats" [ngSwitch]="chat.message.widget_type">
+                                <!-- Message. Default to the left -->
+                                <div class="direct-chat-msg" *ngIf="chat?.type =='bot' && !chat?.isMe ">
+                                    <div class="direct-chat-info clearfix">
+
+                                    </div>
+                                    <div class="direct-chat-text" style=" display: flex; justify-content: space-between;">
+    
+
+                                <div  *ngSwitchCase="'faq'">
+                                    <div class="panel panel-default" style="border-radius: 12px;">
+                                            <div class="panel-heading" style="border-radius: 12px; background-color: #dfdfdf; border-color: #939393; padding: 6px 10px;">
+                                               <h3 class="panel-title" style="font-size:15px; font-weight: bold;"> FAQ </h3>
+                                            </div>
+                                            
+
+                                                            <ul class="list-group" >
+                                                                    <li class="list-group-item" *ngFor="let result of chat.message.results">
+                                                                        <span style="color:#000000; font-size: 15px;" > <b> Q: {{ result?.question }} </b></span><br>
+                                                                        <span style="color: #4cc1b1;"> A: {{ result?.answer }} </span><br>
+                                                                        <span> <a style="color:#00b050;" href="{{ result?.link }}">{{ result?.link }}</a> </span>
+                                                                    </li>
+                                                            </ul>
+
+
+                                    </div>
+                                </div> 
+                                
+                                <div  *ngSwitchCase="'page'">
+                                        <div class="panel panel-default" style="border-radius: 12px;">
+                                                <div class="panel-heading" style="border-radius: 12px; background-color: #dfdfdf; border-color: #939393; padding: 6px 10px;">
+                                                    <h3 class="panel-title" style="font-size:15px; font-weight: bold;"> Page </h3>
+                                                </div>
+
+                                                <ul class="list-group" >
+                                                        <li class="list-group-item" *ngFor="let result of chat.message.results | slice : startPage:paginationLimit let i = index;">
+                                                                <span> <b> <a href="{{ result?.link }}" target="_blank" style="color: #000000; font-size: 15px;" >{{ result?.title }} </a></b> </span><br>
+                                                                <span style="color: #ed1c24;"> {{ result?.desc | shortDescription }} </span><br>
+                                                                <span style="color: #00b050;"> {{ result?.content_desc }} </span> <br>
+                                                                
+                                                                <!-- <span> <a style="color:#00b050;" href="{{ result?.link }}">{{ result?.link | shortUrl }}</a></span><br> -->
+                                                        </li>
+                                                </ul>
+
+                                                <div class="panel-footer" style="padding: 1px 15px; background-color: #fdfdfd; border-top: 1px solid #e3e1e1;">
+                                                <!-- DISPLAY SHOW MORE SHOW LESS BUTTONS IF MORE RESULTS ARE RETURNED -->
+                                                    <div style=" display: flex; justify-content: center;">
+                                                        <a *ngIf=" paginationLimit < (chat.message.results).length" (click)="showMore()" style="text-decoration: none; cursor: pointer; width: auto;">SHOW MORE <i class="glyphicon glyphicon-chevron-down "></i> </a>&nbsp;&nbsp;&nbsp;
+                                                        <a *ngIf="paginationLimit > 3" (click)="showLess()" style="text-decoration: none; cursor: pointer; max-width: 100%; width: auto;" >SHOW LESS <i class="glyphicon glyphicon-chevron-up"></i></a>
+                                                    </div>
+                                                </div>
+    
+                                        </div>
+
+                                </div>
+                                
+                                <div class="clearfix" *ngSwitchCase="'error'">
+                                        <div *ngFor="let result of chat.message.results">
+                                            <div class="well" style=" border-radius: 20px; padding: 9px; margin-bottom: 10px; font-size: 12px;">
+                                                    {{ result?.message }}
+                                            </div>    
+                                        </div>
+                                </div>
+
+                              
+                                        
+                                {{ chat.message[0]?.answer }} 
+                                             
+
+
+
+                                </div>
+                                    <span class="direct-chat-timestamp pull-left" style="margin-left:15px; font-size: 12px;"> {{ chat?.inputMessageTime | date :' h:mm:ss a dd-MM-y'}} </span>
+                                </div>
+
+    
+                                <!-- <div class="direct-chat-msg right" *ngIf="chat?.type !=='bot' && chat?.isMe">
+                                    <div class="direct-chat-text">
+                                        {{chat?.message}}
+                                    </div>
+                                    <span class="direct-chat-timestamp pull-right" style="margin:5px 20px 0 0;">23 Jan 2:05 pm</span>
+                                </div> -->
+                                <!-- /.direct-chat-msg -->
+
+
+                                    <div *ngIf="chat?.type !=='bot' && chat?.isMe">
+                                        
+                                    <div class="message message-in pull-right"   >
+                                        <span>{{chat?.message}}</span>
+                                    </div>
+
+                                    <div class="time time-in pull-right" style=" clear: both;" >
+                                            <span>{{ chat?.inputMessageTime | date :'h:mm:ss a dd-MM-y'  }}</span>
+                                    </div>
+                                    </div>
+                                     
+                                    
+                                    
+
+    
+                            </ng-container>
+                        </div>
+                        <!--/.direct-chat-messages-->
+
+
+
+                        <div *ngIf="show" class="row container-fluid" >
+                        Content Displayed
+                        
+                        </div>
+
+
+                        <!-- /.box-body -->
+                    </div>
+
+                    
+                    <!-- /.box-body -->
+                    <!-- <div class="box-footer">
+                    <button (click)="showMenu()" >Show Menu</button>
+                    </div> -->
+                    <!-- /.box-footer-->
+   
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <div class="input-group">
+                            <input type="text" name="message" [(ngModel)]="message" (keyup.enter)="sendMessage()"
+                                placeholder="Type Message ..." class="form-control">
+                            <span class="input-group-btn">
+                                <a (click)="sendMessage()" class="btn btn-default btn-flat" style="background: #4cc1b1;  color: #fff; border-color: #4cc1b1;"><i class="glyphicon glyphicon-send"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- /.box-footer-->
+                </div>
+    
+        </div>
+    
+    
+    </div>
