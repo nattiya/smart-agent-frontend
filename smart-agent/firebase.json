@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/smart-agent",
+    "public": "public",
     "ignore": [
       "firebase.json",
       "**/.*",
